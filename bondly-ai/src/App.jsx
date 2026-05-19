@@ -5,6 +5,7 @@ export default function App() {
   const [date, setDate] = useState("");
   const [relation, setRelation] = useState("");
   const [eventType, setEventType] = useState("Birthday");
+  const [search, setSearch] = useState("");
 
   const [events, setEvents] = useState(() => {
     const savedEvents = localStorage.getItem("bondly-events");
@@ -194,13 +195,27 @@ You have an important meeting with ${event.name}.`;
           </div>
 
           <div>
+
             <h2 className="text-2xl font-semibold mb-6">
               Upcoming Events
             </h2>
 
+            <input
+              type="text"
+              placeholder="Search events..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full p-3 mb-6 rounded-lg bg-gray-800 border border-gray-700"
+            />
+
             <div className="flex flex-col gap-5">
 
               {[...events]
+                .filter((event) =>
+                  event.name
+                    .toLowerCase()
+                    .includes(search.toLowerCase())
+                )
                 .sort((a, b) => {
                   const today = new Date();
 
