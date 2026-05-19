@@ -57,16 +57,45 @@ export default function App() {
   };
 
   const generateMessage = (event) => {
+    const relation = event.relation.toLowerCase();
+
     if (event.eventType === "Birthday") {
-      return `Happy Birthday ${event.name}! 🎉 Wishing you happiness, success and endless joy.`;
+
+      if (relation.includes("mother")) {
+        return `Happy Birthday Mom ❤️
+Thank you for always supporting and loving me unconditionally.`;
+      }
+
+      if (relation.includes("father")) {
+        return `Happy Birthday Dad 🎉
+Your guidance and strength inspire me every day.`;
+      }
+
+      if (
+        relation.includes("girlfriend") ||
+        relation.includes("boyfriend")
+      ) {
+        return `Happy Birthday Love ❤️
+You make life beautiful and special every single day.`;
+      }
+
+      if (relation.includes("friend")) {
+        return `Happy Birthday Buddy 🎂
+Wishing you success, happiness and unforgettable memories.`;
+      }
+
+      return `Happy Birthday ${event.name}! 🎉
+Wishing you joy, success and happiness always.`;
     }
 
     if (event.eventType === "Anniversary") {
-      return `Happy Anniversary ❤️ Wishing you both endless love and beautiful memories together.`;
+      return `Happy Anniversary ❤️
+Wishing you both endless love and beautiful memories together.`;
     }
 
     if (event.eventType === "Meeting") {
-      return `Reminder 📅 You have an important meeting with ${event.name}.`;
+      return `Reminder 📅
+You have an important meeting with ${event.name}.`;
     }
 
     return `Special wishes to ${event.name}! ✨`;
@@ -249,7 +278,7 @@ export default function App() {
                       </div>
 
                       <div className="mt-5 bg-gray-800 p-4 rounded-xl">
-                        <p className="text-gray-200">
+                        <p className="text-gray-200 whitespace-pre-line">
                           💌 {generateMessage(event)}
                         </p>
                       </div>
