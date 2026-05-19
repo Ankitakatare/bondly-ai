@@ -15,6 +15,12 @@ export default function App() {
     localStorage.setItem("bondly-events", JSON.stringify(events));
   }, [events]);
 
+  useEffect(() => {
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission();
+    }
+  }, []);
+
   const handleSubmit = () => {
     if (!name || !date || !relation) {
       alert("Please fill all fields");
@@ -29,6 +35,12 @@ export default function App() {
     };
 
     setEvents([...events, newEvent]);
+
+    if (Notification.permission === "granted") {
+      new Notification("Event Saved 🎉", {
+        body: `${name}'s ${eventType} added successfully`,
+      });
+    }
 
     setName("");
     setDate("");
@@ -46,18 +58,43 @@ export default function App() {
 
   const generateMessage = (event) => {
     if (event.eventType === "Birthday") {
-      return `Happy Birthday ${event.name}! 🎉 Wishing you happiness and success always.`;
+      return `Happy Birthday ${event.name}! 🎉 Wishing you happiness, success and endless joy.`;
     }
 
     if (event.eventType === "Anniversary") {
-      return `Happy Anniversary ❤️ Wishing you both endless love and memories.`;
+      return `Happy Anniversary ❤️ Wishing you both endless love and beautiful memories together.`;
     }
 
     if (event.eventType === "Meeting") {
-      return `Reminder 📅 You have a meeting with ${event.name}.`;
+      return `Reminder 📅 You have an important meeting with ${event.name}.`;
     }
 
     return `Special wishes to ${event.name}! ✨`;
+  };
+
+  const recommendGift = (relation) => {
+    const lowerRelation = relation.toLowerCase();
+
+    if (lowerRelation.includes("mother")) {
+      return "🎁 Jewelry, Flowers, Personalized Mug";
+    }
+
+    if (lowerRelation.includes("father")) {
+      return "🎁 Watch, Wallet, Perfume";
+    }
+
+    if (lowerRelation.includes("friend")) {
+      return "🎁 Headphones, Books, Chocolates";
+    }
+
+    if (
+      lowerRelation.includes("girlfriend") ||
+      lowerRelation.includes("boyfriend")
+    ) {
+      return "🎁 Perfume, Smart Watch, Romantic Dinner";
+    }
+
+    return "🎁 Gift Card, Cake, Flowers";
   };
 
   return (
@@ -216,6 +253,13 @@ export default function App() {
                           💌 {generateMessage(event)}
                         </p>
                       </div>
+
+                      <div className="mt-4 bg-pink-500/10 border border-pink-500 p-4 rounded-xl">
+                        <p className="text-pink-300 font-semibold">
+                          {recommendGift(event.relation)}
+                        </p>
+                      </div>
+
                     </div>
                   );
                 })}
