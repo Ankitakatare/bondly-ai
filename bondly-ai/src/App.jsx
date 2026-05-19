@@ -106,25 +106,40 @@ You have an important meeting with ${event.name}.`;
     const lowerRelation = relation.toLowerCase();
 
     if (lowerRelation.includes("mother")) {
-      return "🎁 Jewelry, Flowers, Personalized Mug";
+      return {
+        name: "Jewelry Gift Set",
+        link: "https://www.amazon.in/s?k=jewelry+gift+for+mom",
+      };
     }
 
     if (lowerRelation.includes("father")) {
-      return "🎁 Watch, Wallet, Perfume";
+      return {
+        name: "Luxury Watch",
+        link: "https://www.amazon.in/s?k=watch+for+dad",
+      };
     }
 
     if (lowerRelation.includes("friend")) {
-      return "🎁 Headphones, Books, Chocolates";
+      return {
+        name: "Wireless Headphones",
+        link: "https://www.amazon.in/s?k=headphones+gift",
+      };
     }
 
     if (
       lowerRelation.includes("girlfriend") ||
       lowerRelation.includes("boyfriend")
     ) {
-      return "🎁 Perfume, Smart Watch, Romantic Dinner";
+      return {
+        name: "Romantic Gift Box",
+        link: "https://www.amazon.in/s?k=romantic+gift",
+      };
     }
 
-    return "🎁 Gift Card, Cake, Flowers";
+    return {
+      name: "Gift Card",
+      link: "https://www.amazon.in/s?k=gift+card",
+    };
   };
 
   return (
@@ -299,9 +314,14 @@ You have an important meeting with ${event.name}.`;
                       </div>
 
                       <div className="mt-4 bg-pink-500/10 border border-pink-500 p-4 rounded-xl">
-                        <p className="text-pink-300 font-semibold">
-                          {recommendGift(event.relation)}
-                        </p>
+                        <a
+                          href={recommendGift(event.relation).link}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-pink-300 font-semibold underline"
+                        >
+                          🎁 {recommendGift(event.relation).name}
+                        </a>
                       </div>
 
                     </div>
